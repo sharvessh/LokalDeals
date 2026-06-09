@@ -69,3 +69,19 @@ CREATE TABLE SAVED_DEAL (
 
 -- Seed core category strings directly into the dictionary table
 INSERT INTO CATEGORY (name) VALUES ('Groceries'), ('F&B'), ('Pharmacy'), ('Electronics');
+
+-- ==========================================
+-- GEOSPATIAL OPTIMIZATION FOR AREA SEARCHES
+-- ==========================================
+
+-- Upgrade BUSINESS table with a synchronized spatial coordinate point
+ALTER TABLE BUSINESS 
+ADD COLUMN location POINT AS (ST_PointFromText(CONCAT('POINT(', longitude, ' ', latitude, ')'), 4326)) STORED NOT NULL;
+
+ALTER TABLE BUSINESS ADD SPATIAL INDEX(location);
+
+-- Upgrade USER table with a synchronized spatial coordinate point
+ALTER TABLE USER 
+ADD COLUMN location POINT AS (ST_PointFromText(CONCAT('POINT(', longitude, ' ', latitude, ')'), 4326)) STORED NOT NULL;
+
+ALTER TABLE USER ADD SPATIAL INDEX(location);
