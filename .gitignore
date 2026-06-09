@@ -1,0 +1,17 @@
+# Target build folders
+target/
+bin/
+
+# IDE configuration files
+.idea/
+.vscode/
+*.iml
+
+# Environment & Sensitive Credentials
+.env
+.env.local
+application.properties
+
+# Operating system junk
+.DS_Store
+Thumbs.db
