@@ -8,21 +8,28 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "category")
+@Table(name = "CATEGORY")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Integer categoryId;
+    private Long categoryId;
 
-    @Column(name = "category_name", nullable = false, unique = true)
-    private String categoryName;
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    // --- Constructors ---
+    public Category() {}
+
+    public Category(String name) {
+        this.name = name;
+    }
 
     // --- Getters and Setters ---
-    public Integer getCategoryId() { return categoryId; }
-    public void setCategoryId(Integer categoryId) { this.categoryId = categoryId; }
+    public Long getCategoryId() { return categoryId; }
+    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
 
-    public String getCategoryName() { return categoryName; }
-    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 }

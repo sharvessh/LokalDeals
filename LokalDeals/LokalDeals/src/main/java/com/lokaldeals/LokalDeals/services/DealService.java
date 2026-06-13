@@ -37,6 +37,7 @@ public class DealService {
         }
         validateDealPayload(request.getDiscountPercentage(), request.getExpiryDate());
 
+        // IDs are integers in existing repositories
         Integer businessId = request.getBusinessId();
         Integer categoryId = request.getCategoryId();
 

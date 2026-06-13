@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.lokaldeals.LokalDeals.models.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-    // Used by AuthController for login and duplicate checks
+public interface UserRepository extends JpaRepository<User, Integer> { // Changed signature context type to Integer
     Optional<User> findByEmail(String email);
 }

@@ -1,6 +1,5 @@
 package com.lokaldeals.LokalDeals.models;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -13,13 +12,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer userId;
+    private Integer userId; // Changed from Long to Integer
 
     @Column(nullable = false)
     private String name;
@@ -34,17 +33,27 @@ public class User {
     @Column(name = "user_type", nullable = false)
     private UserType userType;
 
-    @Column(precision = 9, scale = 6)
-    private BigDecimal latitude;
+    @Column(nullable = false)
+    private Double latitude;
 
-    @Column(precision = 9, scale = 6)
-    private BigDecimal longitude;
+    @Column(nullable = false)
+    private Double longitude;
 
-    @Column(name = "created_at", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", updatable = false, insertable = false)
     private LocalDateTime createdAt;
 
-    // Getters and Setters
-    public Integer getUserId() { return userId; }
+    public User() {}
+
+    public User(String name, String email, String password, UserType userType, Double latitude, Double longitude) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.userType = userType;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Integer getUserId() { return userId; } // Changed to Integer
     public void setUserId(Integer userId) { this.userId = userId; }
 
     public String getName() { return name; }
@@ -59,12 +68,11 @@ public class User {
     public UserType getUserType() { return userType; }
     public void setUserType(UserType userType) { this.userType = userType; }
 
-    public BigDecimal getLatitude() { return latitude; }
-    public void setLatitude(BigDecimal latitude) { this.latitude = latitude; }
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
 
-    public BigDecimal getLongitude() { return longitude; }
-    public void setLongitude(BigDecimal longitude) { this.longitude = longitude; }
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

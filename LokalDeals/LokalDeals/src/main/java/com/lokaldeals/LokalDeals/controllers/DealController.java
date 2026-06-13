@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.lokaldeals.LokalDeals.dto.DealRequest;
 import com.lokaldeals.LokalDeals.models.Deal;
 import com.lokaldeals.LokalDeals.services.DealService;
 
+@CrossOrigin(origins = "*") // Allows Raj's frontend code to safely make API calls to your server
 @RestController
 @RequestMapping("/deals")
 public class DealController {
@@ -28,42 +30,32 @@ public class DealController {
     @Autowired
     private DealService dealService;
 
-    // GET /deals/nearby — Fetch filtered promotions near coordinates
-    @GetMapping("/nearby")
-    public ResponseEntity<?> getNearbyDeals(
-            @RequestParam("lat") Double lat,
-            @RequestParam("lng") Double lng,
-            @RequestParam(value = "radius", required = false) Double radius,
-            @RequestParam(value = "categoryId", required = false) Integer categoryId,
-            @RequestParam(value = "minDiscount", required = false) BigDecimal minDiscount) {
-        try {
-            List<Deal> nearbyDeals = dealService.getNearbyDeals(lat, lng, radius, categoryId, minDiscount);
-            return ResponseEntity.ok(nearbyDeals);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-
-    // GET /deals — Fetch a comprehensive list of all stored entries
+    /**
+     * GET /deals — Fetch every active promotion across the system.
+     */
     @GetMapping
     public ResponseEntity<List<Deal>> getAllDeals() {
         return ResponseEntity.ok(dealService.getAllDeals());
     }
 
-    // POST /deals — Create a brand new promotion entry (business only)
+    /**
+     * POST /deals — Broadcasting entry point for a merchant to register a flash promotion.
+     */
     @PostMapping
-    public ResponseEntity<?> createDeal(@RequestBody DealRequest request, @AuthenticationPrincipal String userEmail) {
+    public ResponseEntity<?> createNewDeal(@RequestBody DealRequest request, @AuthenticationPrincipal String userEmail) {
         try {
-            Deal deal = dealService.createDeal(request, userEmail);
-            return ResponseEntity.status(HttpStatus.CREATED).body(deal);
+            Deal savedDeal = dealService.createDeal(request, userEmail);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedDeal);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
-    // PUT /deals/{id} — Modify an existing deal's attributes
+    /**
+     * PUT /deals/{id} — Allows a merchant to modify title, descriptions, or discount scale.
+     */
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateDeal(@PathVariable Integer id, @RequestBody DealRequest request, @AuthenticationPrincipal String userEmail) {
+    public ResponseEntity<?> modifyDeal(@PathVariable Integer id, @RequestBody DealRequest request, @AuthenticationPrincipal String userEmail) {
         try {
             Deal updatedDeal = dealService.updateDeal(id, request, userEmail);
             return ResponseEntity.ok(updatedDeal);
@@ -72,12 +64,33 @@ public class DealController {
         }
     }
 
-    // DELETE /deals/{id} — Drop a deal from the system
+    /**
+     * DELETE /deals/{id} — Instantly un-publishes a flash deal from circulation feeds.
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteDeal(@PathVariable Integer id, @AuthenticationPrincipal String userEmail) {
+    public ResponseEntity<?> removeDeal(@PathVariable Integer id, @AuthenticationPrincipal String userEmail) {
         try {
             dealService.deleteDeal(id, userEmail);
-            return ResponseEntity.ok("Deal entry deleted successfully.");
+            return ResponseEntity.ok("Success: Promotion removed cleanly from tracking engine.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    /**
+     * GET /deals/nearby — Core engine endpoint powering the Consumer landing screen feed maps.
+     * Takes consumer coordinates and searches through Zul's spatial tables within a localized boundary limit.
+     */
+    @GetMapping("/nearby")
+    public ResponseEntity<?> findLocalPromotions(
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam(required = false) Double radius,
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) BigDecimal minDiscount) {
+        try {
+            List<Deal> nearbyDeals = dealService.getNearbyDeals(latitude, longitude, radius, categoryId, minDiscount);
+            return ResponseEntity.ok(nearbyDeals);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

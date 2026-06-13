@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +17,11 @@ import com.lokaldeals.LokalDeals.dto.AuthResponse;
 import com.lokaldeals.LokalDeals.dto.LoginRequest;
 import com.lokaldeals.LokalDeals.dto.RegisterRequest;
 import com.lokaldeals.LokalDeals.models.User;
+import com.lokaldeals.LokalDeals.models.UserType;
 import com.lokaldeals.LokalDeals.repositories.UserRepository;
 import com.lokaldeals.LokalDeals.security.JwtUtils;
 
+@CrossOrigin(origins = "*") // Allows Raj's frontend code to safely make API calls to your server
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -42,7 +45,10 @@ public class AuthController {
         user.setName(registerRequest.getName());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setUserType(registerRequest.getUserType());
+        
+        // Safely converts String input into the UserType Enum
+        user.setUserType(UserType.valueOf(registerRequest.getUserType().toUpperCase()));
+
         user.setLatitude(registerRequest.getLatitude());
         user.setLongitude(registerRequest.getLongitude());
 
@@ -62,8 +68,8 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: Invalid email or password!");
     }
 
-    @GetMapping("/auth/status")
+    @GetMapping("/status")
     public ResponseEntity<String> getStatus() {
         return ResponseEntity.ok("🚀 LokalDeals Backend Server is Online and Connected to MySQL!");
-}
+    }
 }

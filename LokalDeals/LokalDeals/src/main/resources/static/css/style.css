@@ -1,0 +1,141 @@
+/* LokalDeals Global Theme Configuration */
+:root {
+    --brand-red: #DC3545;
+    --brand-yellow: #FFC107;
+    --brand-dark: #212529;
+    --brand-cream: #fffdf5;
+}
+
+body {
+    background-color: var(--brand-cream);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Auth Pages Styling */
+.login-container {
+    min-height: 100vh;
+}
+
+.brand-banner {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.9), rgba(255, 193, 7, 0.8)), 
+                url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.card-registration {
+    border-radius: 1rem;
+    border: none;
+}
+
+/* Nav & Dashboard Layout Elements */
+.navbar-brand-custom {
+    font-weight: 700;
+    color: var(--brand-yellow) !important;
+}
+
+.navbar-brand-custom span {
+    color: #ffffff;
+}
+
+.bg-brand-gradient {
+    background: linear-gradient(135deg, var(--brand-red), #bd2130);
+}
+
+.dashboard-banner {
+    background: linear-gradient(rgba(33, 37, 41, 0.7), rgba(33, 37, 41, 0.7)), 
+                url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem;
+    color: white;
+}
+
+/* Form Interactivity & Card Overrides */
+.btn-brand-primary {
+    background-color: var(--brand-red);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-brand-primary:hover {
+    background-color: #bd2130;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-brand-submit {
+    background-color: var(--brand-yellow);
+    color: var(--brand-dark);
+    font-weight: 700;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-brand-submit:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--brand-red) !important;
+    color: white !important;
+}
+
+.nav-pills .nav-link {
+    color: var(--brand-red);
+    font-weight: 600;
+}
+
+/* Card Design & Table Hovers */
+.card-custom {
+    border-radius: 1rem;
+    border: none;
+}
+
+.deal-card {
+    border-radius: 1rem;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.deal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,0.12) !important;
+}
+
+.deal-badge {
+    background-color: var(--brand-red);
+    color: white;
+    font-weight: 700;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10;
+}
+
+.btn-brand-outline {
+    border: 2px solid var(--brand-red);
+    color: var(--brand-red);
+    font-weight: 600;
+}
+
+.btn-brand-outline:hover {
+    background-color: var(--brand-red);
+    color: white;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #fffdec;
+}
+
+.star-rating {
+    color: var(--brand-yellow);
+}

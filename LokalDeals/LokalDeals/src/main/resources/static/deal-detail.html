@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LokalDeals - Deal Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="bg-white py-3 shadow-sm mb-5">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="index.html" class="btn btn-outline-secondary btn-sm fw-bold">
+                <i class="bi bi-arrow-left"></i> Back to Discovery
+            </a>
+            <button class="btn btn-outline-danger btn-sm fw-bold" id="saveDealBtn">
+                <i class="bi bi-heart"></i> Save Deal
+            </button>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        <div class="row g-4">
+            
+            <div class="col-lg-8">
+                <div class="p-4 p-sm-5 d-flex align-items-end text-white shadow-sm mb-4 rounded position-relative" 
+                     style="height: 320px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;">
+                    <div>
+                        <span class="badge bg-danger fs-5 mb-2 px-3 py-1.5 fw-bold" id="dealDiscountBadge">--% OFF FLASH SPECIAL</span>
+                        <h1 class="display-5 fw-bold" id="dealTitleHeader">Loading Deal Title...</h1>
+                    </div>
+                </div>
+
+                <div class="card card-custom shadow-sm p-4 mb-4 bg-white border-0">
+                    <h4 class="fw-bold text-dark border-bottom pb-2 mb-3">Promotion Guidelines</h4>
+                    <p class="text-secondary fs-5" id="dealDescriptionText">Loading flash deal descriptions...</p>
+                    
+                    <div class="row g-3 mt-2">
+                        <div class="col-sm-6">
+                            <div class="p-3 bg-light rounded d-flex align-items-center">
+                                <i class="bi bi-clock-fill text-danger fs-2 me-3"></i>
+                                <div>
+                                    <small class="text-muted d-block text-uppercase fw-bold font-monospace">Expiration Frame</small>
+                                    <span class="fw-bold text-dark" id="dealExpiryText">Checking timer...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 bg-light rounded d-flex align-items-center">
+                                <i class="bi bi-tag-fill text-warning fs-2 me-3"></i>
+                                <div>
+                                    <small class="text-muted d-block text-uppercase fw-bold font-monospace">Category Group</small>
+                                    <span class="fw-bold text-dark" id="dealCategoryText">General</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-custom shadow-sm p-4 bg-white border-0">
+                    <h4 class="fw-bold text-dark border-bottom pb-2 mb-4">
+                        <i class="bi bi-chat-left-heart-fill text-danger me-2"></i>Customer Reviews
+                    </h4>
+                    
+                    <form class="mb-4 bg-light p-3 rounded" id="reviewSubmitForm">
+                        <h6 class="fw-bold text-dark mb-2">Have you claimed this deal? Share your experience!</h6>
+                        <div class="row g-2">
+                            <div class="col-sm-4">
+                                <select class="form-select" id="reviewRating" required>
+                                    <option value="" disabled selected>Give Stars...</option>
+                                    <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+                                    <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+                                    <option value="3">⭐⭐⭐ 3 Stars</option>
+                                    <option value="2">⭐⭐ 2 Stars</option>
+                                    <option value="1">⭐ 1 Star</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-8 d-flex gap-2">
+                                <input type="text" class="form-control" placeholder="Optional comments..." id="reviewComment">
+                                <button type="submit" class="btn btn-brand-primary text-nowrap px-4">Post</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="reviewsListContainer">
+                        <p class="text-muted small">No reviews written for this vendor yet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card card-custom shadow-sm p-4 bg-white border-0 sticky-md-top" style="top: 90px; z-index: 5;">
+                    <h5 class="fw-bold text-muted small text-uppercase font-monospace mb-3">Merchant Provider</h5>
+                    <h3 class="fw-bold text-danger mb-1" id="bizNameHeader"><i class="bi bi-shop me-2"></i>Loading Store...</h3>
+                    <div class="star-rating mb-3">
+                        <span id="bizAverageRatingText">⭐⭐⭐⭐☆ (4.2 / 5.0 Average)</span>
+                    </div>
+                    
+                    <ul class="list-unstyled text-secondary small my-4 d-flex flex-column gap-3">
+                        <li class="d-flex align-items-start">
+                            <i class="bi bi-geo-alt-fill text-danger me-2 mt-0.5"></i> 
+                            <span id="bizAddressText">Locating coordinate address...</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone-fill text-success me-2"></i> 
+                            <span id="bizPhoneText">--</span>
+                        </li>
+                    </ul>
+
+                    <hr>
+                    <a href="#" id="callVendorBtn" class="btn btn-brand-primary w-100 btn-lg shadow-sm py-2.5 fw-bold mb-2">
+                        <i class="bi bi-telephone-outbound me-2"></i>Call Vendor to Reserve
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/deals.js"></script>
+</body>
+</html>

@@ -1,11 +1,11 @@
 package com.lokaldeals.LokalDeals.services;
 
-import java.util.Objects;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lokaldeals.LokalDeals.dto.BusinessRequest;
 import com.lokaldeals.LokalDeals.models.Business;
 import com.lokaldeals.LokalDeals.models.User;
 import com.lokaldeals.LokalDeals.repositories.BusinessRepository;
@@ -20,34 +20,26 @@ public class BusinessService {
     @Autowired
     private UserRepository userRepository;
 
-    public Business createBusinessProfile(BusinessRequest request, String ownerEmail) {
-        Objects.requireNonNull(request, "Business request data cannot be null");
-        if (ownerEmail == null || ownerEmail.trim().isEmpty()) {
-            throw new IllegalArgumentException("Owner email session token missing");
-        }
-
-        // Check if this merchant user already set up a storefront profile
-        if (businessRepository.findByOwnerEmail(ownerEmail).isPresent()) {
-            throw new RuntimeException("Conflict: A business profile already exists for this account.");
-        }
-
+    public Business createBusiness(Business business, String ownerEmail) {
         User owner = userRepository.findByEmail(ownerEmail)
-                .orElseThrow(() -> new RuntimeException("Error: Associated User account not found!"));
-
-        Business business = new Business();
-        business.setBusinessName(request.getBusinessName());
-        business.setContact(request.getContact());
-        business.setLocation(request.getLocation());
+                .orElseThrow(() -> new RuntimeException("Error: Owner account not found for email: " + ownerEmail));
+        
         business.setOwner(owner);
-
         return businessRepository.save(business);
     }
 
-    public Business getBusinessById(Integer businessId) {
-        if (businessId == null) {
-            throw new IllegalArgumentException("Business ID cannot be null");
-        }
-        return businessRepository.findById(businessId)
-                .orElseThrow(() -> new RuntimeException("Error: Storefront profile not found!"));
+    public List<Business> getAllBusinesses() {
+        return businessRepository.findAll();
+    }
+
+    public Optional<Business> getBusinessById(Integer businessId) { // Updated type to Integer
+        return businessRepository.findById(businessId);
+    }
+
+    public List<Business> getBusinessesByOwner(String ownerEmail) {
+        User owner = userRepository.findByEmail(ownerEmail)
+                .orElseThrow(() -> new RuntimeException("Error: Account not found for email: " + ownerEmail));
+        
+        return businessRepository.findByOwner(owner);
     }
 }
