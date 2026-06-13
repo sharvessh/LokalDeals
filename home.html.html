@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LokalDeals - Discover Nearby Deals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #DC3545;
+            --brand-yellow: #FFC107;
+            --brand-dark: #212529;
+        }
+        body {
+            background-color: #fffdf5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .bg-brand-gradient {
+            background: linear-gradient(135deg, var(--brand-red), #bd2130);
+        }
+        .navbar-brand-custom {
+            font-weight: 700;
+            color: var(--brand-yellow) !important;
+        }
+        .navbar-brand-custom span {
+            color: #ffffff;
+        }
+        .filter-banner {
+            background-color: white;
+            border-radius: 1rem;
+        }
+        .deal-card {
+            border-radius: 1rem;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .deal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,0.12) !important;
+        }
+        .deal-badge {
+            background-color: var(--brand-red);
+            color: white;
+            font-weight: 700;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 10;
+        }
+        .btn-brand-outline {
+            border: 2px solid var(--brand-red);
+            color: var(--brand-red);
+            font-weight: 600;
+        }
+        .btn-brand-outline:hover {
+            background-color: var(--brand-red);
+            color: white;
+        }
+        .btn-favorite-toggle {
+            color: var(--brand-red);
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-brand-gradient shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-custom" href="home.html">
+                <i class="bi bi-lightning-fill text-warning"></i> Lokal<span>Deals</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#consumerNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="consumerNavbar">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-white active fw-semibold me-2" href="home.html"><i class="bi bi-house-door-fill text-warning"></i> Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white me-3" href="profile.html"><i class="bi bi-heart-fill text-warning"></i> Saved Deals</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light btn-sm fw-bold px-3" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="filter-banner p-4 shadow-sm border-0">
+                    <h4 class="fw-bold text-dark mb-3"><i class="bi bi-sliders text-danger me-2"></i> Find Food Discounts Near You</h4>
+                    <form id="filterForm" class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold text-muted">Your Current Location</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-danger"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input type="text" class="form-control" value="Klang, Selangor" placeholder="Detecting location...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold text-muted">Food / Shop Category</label>
+                            <select class="form-select">
+                                <option value="all">All Categories</option>
+                                <option value="FB" selected>F&B (Mamak, Cafes, Stalls)</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Pharmacy">Pharmacy</option>
+                                <option value="Electronics">Electronics</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold text-muted">Max Proximity Radius: <span class="text-danger fw-bold" id="radiusVal">5 km</span></label>
+                            <input type="range" class="form-range mt-2" min="5" max="15" step="5" value="5" id="radiusRange" oninput="document.getElementById('radiusVal').innerText = this.value + ' km'">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="fw-bold text-secondary mb-4"><i class="bi bi-fire text-danger me-2"></i>Active Deals Near You</h3>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="dealsGrid">
+            
+            <div class="col">
+                <div class="card h-100 deal-card shadow-sm position-relative">
+                    <span class="badge deal-badge px-3 py-2 rounded-pill fs-6">40% OFF</span>
+                    <button class="btn-favorite-toggle"><i class="bi bi-heart"></i></button>
+                    <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Nasi Lemak" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column justify-content-between p-4">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-warning text-dark fw-bold">F&B</span>
+                                <small class="text-success fw-bold"><i class="bi bi-geo-alt"></i> 1.2 km away</small>
+                            </div>
+                            <h4 class="card-title fw-bold text-dark mb-2">RM2 Nasi Lemak Flash!</h4>
+                            <p class="card-text text-muted small">Mamak Stall Ali is operating a quick clearance flash sale on all standard packs for dine-in!</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top d-flex align-items-center justify-content-between">
+                            <div class="text-danger fw-bold small"><i class="bi bi-clock-history"></i> Expires in 2h</div>
+                            <a href="deal-detail.html" class="btn btn-brand-outline px-3">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 deal-card shadow-sm position-relative">
+                    <span class="badge deal-badge px-3 py-2 rounded-pill fs-6">20% OFF</span>
+                    <button class="btn-favorite-toggle"><i class="bi bi-heart-fill"></i></button>
+                    <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Groceries" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column justify-content-between p-4">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-warning text-dark fw-bold">Groceries</span>
+                                <small class="text-success fw-bold"><i class="bi bi-geo-alt"></i> 3.5 km away</small>
+                            </div>
+                            <h4 class="card-title fw-bold text-dark mb-2">Fresh Chicken Discount</h4>
+                            <p class="card-text text-muted small">Fresh batch arrived! Excess inventory marked down for neighborhood community buyers tonight only.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top d-flex align-items-center justify-content-between">
+                            <div class="text-danger fw-bold small"><i class="bi bi-clock-history"></i> Expires in 5h</div>
+                            <a href="deal-detail.html" class="btn btn-brand-outline px-3">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
