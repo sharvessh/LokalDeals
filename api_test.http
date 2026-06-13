@@ -1,0 +1,12 @@
+### Test Public Registration Endpoint
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "LokalDeals Test Merchant",
+  "email": "testmerchant2@lokaldeals.com",
+  "password": "securepassword123",
+  "userType": "BUSINESS",
+  "latitude": 5.4164,
+  "longitude": 100.3327
+}

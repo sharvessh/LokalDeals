@@ -1,0 +1,12 @@
+### Register a New Account
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test Merchant Store",
+  "email": "merchant1@lokaldeals.com",
+  "password": "securepassword123",
+  "userType": "BUSINESS",
+  "latitude": 5.4164,
+  "longitude": 100.3327
+}
