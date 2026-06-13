@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LokalDeals - Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #DC3545;
+            --brand-yellow: #FFC107;
+        }
+        body {
+            background: linear-gradient(rgba(255, 253, 245, 0.95), rgba(255, 253, 245, 0.95)), 
+                        url('https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card-registration {
+            border-radius: 1rem;
+            border: none;
+        }
+        .nav-pills .nav-link.active {
+            background-color: var(--brand-red) !important;
+            color: white !important;
+        }
+        .nav-pills .nav-link {
+            color: var(--brand-red);
+            font-weight: 600;
+        }
+        .btn-brand-primary {
+            background-color: var(--brand-yellow);
+            color: #212529;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-brand-primary:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                
+                <div class="card card-registration shadow-lg bg-white my-4">
+                    <div class="card-body p-4 p-sm-5">
+                        
+                        <div class="text-center mb-4">
+                            <h2 class="fw-bold text-danger"><i class="bi bi-lightning-fill text-warning"></i> LokalDeals</h2>
+                            <p class="text-muted">Join the ultimate local community saving platform</p>
+                        </div>
+
+                        <ul class="nav nav-pills nav-fill mb-4 p-1 bg-light rounded" id="regTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="consumer-tab" data-bs-toggle="pill" data-bs-target="#consumerReg" type="button" role="tab"><i class="bi bi-person me-2"></i>Consumer</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="business-tab" data-bs-toggle="pill" data-bs-target="#businessReg" type="button" role="tab"><i class="bi bi-shop me-2"></i>Business Owner</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="regTabsContent">
+                            
+                            <div class="tab-pane fade show active" id="consumerReg" role="tabpanel">
+                                <form id="formConsumer">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Full Name</label>
+                                        <input type="text" class="form-control" placeholder="John Doe" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Email Address</label>
+                                        <input type="email" class="form-control" placeholder="john@example.com" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label fw-semibold">Password</label>
+                                        <input type="password" class="form-control" placeholder="Create secure password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-brand-primary btn-lg w-100 fw-bold shadow-sm">Create Consumer Account</button>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" id="businessReg" role="tabpanel">
+                                <form id="formBusiness">
+                                    <h5 class="text-secondary border-bottom pb-2 mb-3">Owner Profile</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Manager Full Name</label>
+                                        <input type="text" class="form-control" placeholder="Ali bin Ahmad" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Login Email</label>
+                                        <input type="email" class="form-control" placeholder="ali@mamak.com" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Password</label>
+                                        <input type="password" class="form-control" placeholder="Create secure password" required>
+                                    </div>
+
+                                    <h5 class="text-secondary border-bottom pb-2 my-3">Business Settings</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Business/Stall Name</label>
+                                        <input type="text" class="form-control" placeholder="Ali's Mamak Stall" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Contact Hotline</label>
+                                        <input type="tel" class="form-control" placeholder="+60123456789" required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mb-4">
+                                            <label class="form-label fw-semibold">Latitude</label>
+                                            <input type="number" step="any" class="form-control" placeholder="3.1390" required>
+                                        </div>
+                                        <div class="col-6 mb-4">
+                                            <label class="form-label fw-semibold">Longitude</label>
+                                            <input type="number" step="any" class="form-control" placeholder="101.6869" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold shadow-sm text-white">Register & Launch My Shop</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 border-top pt-3">
+                            <p class="mb-0 text-muted">Already have an account? <a href="login.html" class="text-danger fw-bold text-decoration-none">Login here</a></p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

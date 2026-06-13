@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LokalDeals - Post New Deal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #DC3545;
+            --brand-yellow: #FFC107;
+            --brand-dark: #212529;
+        }
+        body {
+            background-color: #fffdf5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .bg-brand-gradient {
+            background: linear-gradient(135deg, var(--brand-red), #bd2130);
+        }
+        .form-card {
+            border-radius: 1rem;
+            border: none;
+        }
+        .side-promo-panel {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.95), rgba(189, 33, 48, 0.9)), 
+                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80');
+            background-size: cover;
+            background-position: center;
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            color: white;
+        }
+        .btn-brand-submit {
+            background-color: var(--brand-yellow);
+            color: var(--brand-dark);
+            font-weight: 700;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-brand-submit:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--brand-red);
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-white py-3 shadow-sm mb-5">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="business-dashboard.html" class="btn btn-outline-danger btn-sm fw-bold">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+            <span class="fw-bold text-dark"><i class="bi bi-shop text-warning me-1"></i> Ali's Mamak Stall</span>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                
+                <div class="card form-card shadow-lg bg-white overflow-hidden">
+                    <div class="row g-0">
+                        
+                        <div class="col-md-5 side-promo-panel d-none d-md-flex p-5 flex-column justify-content-between">
+                            <div>
+                                <h3 class="fw-bold text-warning mb-3"><i class="bi bi-lightning-fill"></i> Flash Broadcasting</h3>
+                                <p class="fw-light">When you publish a deal on LokalDeals, notifications are instantly configured to target smartphone users within a 5km–15km radius of your business coordinates automatically!</p>
+                            </div>
+                            
+                            <div class="bg-white bg-opacity-10 p-3 rounded border border-white border-opacity-25 mt-4">
+                                <h6 class="fw-bold text-warning mb-2"><i class="bi bi-info-circle"></i> MVP Strategy Rules:</h6>
+                                <ul class="small ps-3 mb-0 text-white-50">
+                                    <li>Keep titles under 40 characters for mobile layouts.</li>
+                                    <li>Set realistic expiries to maintain customer loyalty.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 p-4 p-sm-5">
+                            <h3 class="fw-bold text-dark mb-1">Create Promotion</h3>
+                            <p class="text-muted mb-4">Fill out the variables below to display your deal on the local maps immediately.</p>
+
+                            <form id="postDealForm">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Deal Title</label>
+                                    <input type="text" class="form-control form-control-lg" required placeholder="e.g., RM2 Nasi Lemak Flash Deal!">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Short Description</label>
+                                    <textarea class="form-control" rows="3" required placeholder="Describe what customers get (e.g., Available for dine-in only during slow hours from 3 PM to 6 PM)"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6 mb-3">
+                                        <label class="form-label fw-semibold">Discount Value (%)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light text-muted"><i class="bi bi-percent"></i></span>
+                                            <input type="number" class="form-control" min="1" max="100" placeholder="40" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 mb-3">
+                                        <label class="form-label fw-semibold">Category Type</label>
+                                        <select class="form-select" required>
+                                            <option value="" selected disabled>Choose group...</option>
+                                            <option value="FB">F&B (Food & Beverage)</option>
+                                            <option value="Groceries">Groceries</option>
+                                            <option value="Pharmacy">Pharmacy</option>
+                                            <option value="Electronics">Electronics</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Flash Expiration Time</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted"><i class="bi bi-alarm"></i></span>
+                                        <input type="datetime-local" class="form-control" required>
+                                    </div>
+                                    <div class="form-text text-muted">Once this timestamp hits, the system safely triggers off visibility automatically.</div>
+                                </div>
+
+                                <button type="submit" class="btn btn-brand-submit btn-lg w-100 shadow-sm py-3 mb-2">
+                                    <i class="bi bi-megaphone-fill me-2"></i>Broadcast Deal Now
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
